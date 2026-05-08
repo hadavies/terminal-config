@@ -98,3 +98,23 @@ alias less='less -R'
 alias cat='bat --style=plain'
 alias find='fd'
 
+# Check terminal-config sync status on shell start
+if [ -d ~/terminal-config/.git ]; then
+  (
+    cd ~/terminal-config
+    git fetch --quiet 2>/dev/null
+    commits_ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null || echo 0)
+    commits_behind=$(git rev-list --count HEAD..@{u} 2>/dev/null || echo 0)
+
+    if [ "$commits_ahead" -gt 0 ]; then
+      echo "📤 You have $commits_ahead local change(s) to push"
+    fi
+    if [ "$commits_behind" -gt 0 ]; then
+      echo "📥 terminal-config has $commits_behind update(s) to pull"
+    fi
+    if [ "$commits_ahead" -gt 0 ] || [ "$commits_behind" -gt 0 ]; then
+      echo "   → Sync: cd ~/terminal-config && git pull && git push"
+    fi
+  ) &
+fi
+
