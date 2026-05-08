@@ -100,21 +100,25 @@ alias find='fd'
 
 # Check terminal-config sync status on shell start
 if [ -d ~/terminal-config/.git ]; then
-  (
-    cd ~/terminal-config
+  {
+    cd ~/terminal-config 2>/dev/null || return
     git fetch --quiet 2>/dev/null
-    commits_ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null || echo 0)
-    commits_behind=$(git rev-list --count HEAD..@{u} 2>/dev/null || echo 0)
 
-    if [ "$commits_ahead" -gt 0 ]; then
-      echo "📤 You have $commits_ahead local change(s) to push"
+    local ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null)
+    local behind=$(git rev-list --count HEAD..@{u} 2>/dev/null)
+    local changes=$(git status --porcelain 2>/dev/null)
+
+    [ -z "$ahead" ] && ahead=0
+    [ -z "$behind" ] && behind=0
+
+    if [ "$ahead" -gt 0 ] || [ "$behind" -gt 0 ] || [ -n "$changes" ]; then
+      echo ""
+      [ "$ahead" -gt 0 ] && echo "📤 You have $ahead local change(s) to push"
+      [ "$behind" -gt 0 ] && echo "📥 terminal-config has $behind update(s) to pull"
+      [ -n "$changes" ] && echo "✏️  Uncommitted changes in terminal-config"
+      echo "   → Review: cd ~/terminal-config && git status"
     fi
-    if [ "$commits_behind" -gt 0 ]; then
-      echo "📥 terminal-config has $commits_behind update(s) to pull"
-    fi
-    if [ "$commits_ahead" -gt 0 ] || [ "$commits_behind" -gt 0 ]; then
-      echo "   → Sync: cd ~/terminal-config && git pull && git push"
-    fi
-  ) &
+  } &
+  disown
 fi
 
