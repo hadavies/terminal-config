@@ -5,6 +5,18 @@ echo "Installing terminal config..."
 
 # Get the absolute path to the repo
 REPO_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR_NAME="$(basename "$REPO_PATH")"
+DIR_PARENT="$(dirname "$REPO_PATH")"
+
+# If the directory doesn't start with a dot, rename it
+if [[ "$DIR_NAME" != .* ]]; then
+  echo "Renaming $DIR_NAME to .$DIR_NAME..."
+  NEW_REPO_PATH="$DIR_PARENT/.$DIR_NAME"
+  mv "$REPO_PATH" "$NEW_REPO_PATH"
+  REPO_PATH="$NEW_REPO_PATH"
+  DIR_NAME=".$DIR_NAME"
+  echo "✓ Renamed to hidden directory"
+fi
 
 # Create necessary directories
 mkdir -p ~/.config/ghostty
