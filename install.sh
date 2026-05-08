@@ -27,6 +27,15 @@ ln -sf "$REPO_PATH/zsh/.zshrc" ~/.zshrc
 ln -sf "$REPO_PATH/config/ghostty/config" ~/.config/ghostty/config
 ln -sf "$REPO_PATH/config/starship.toml" ~/.config/starship.toml
 
+# Check for mise
+if ! command -v mise &> /dev/null && [ ! -f "$HOME/.local/bin/mise" ]; then
+  echo "Installing mise..."
+  curl https://mise.run | sh
+  echo "✓ mise installed"
+else
+  echo "✓ mise already installed"
+fi
+
 # Check for Homebrew
 if ! command -v brew &> /dev/null; then
   echo "❌ Homebrew not found. Install from https://brew.sh"
