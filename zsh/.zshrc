@@ -19,6 +19,7 @@ if [[ -n "$GHOSTTY_RESOURCES_DIR" ]]; then
 fi
 
 eval "$($HOME/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
 
@@ -99,9 +100,9 @@ alias cat='bat --style=plain'
 alias find='fd'
 
 # Check terminal-config sync status on shell start
-if [ -d ~/terminal-config/.git ]; then
+if [ -d ~/.terminal-config/.git ]; then
   {
-    cd ~/terminal-config 2>/dev/null || return
+    cd ~/.terminal-config 2>/dev/null || return
     git fetch --quiet 2>/dev/null
 
     local ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null)
@@ -116,7 +117,7 @@ if [ -d ~/terminal-config/.git ]; then
       [ "$ahead" -gt 0 ] && echo "📤 You have $ahead local change(s) to push"
       [ "$behind" -gt 0 ] && echo "📥 terminal-config has $behind update(s) to pull"
       [ -n "$changes" ] && echo "✏️  Uncommitted changes in terminal-config"
-      echo "   → Review: cd ~/terminal-config && git status"
+      echo "   → Review: cd ~/.terminal-config && git status"
     fi
   } &
   disown

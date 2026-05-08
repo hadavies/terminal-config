@@ -23,7 +23,7 @@ mkdir -p ~/.config/ghostty
 
 # Create symlinks
 echo "Setting up symlinks..."
-ln -sf "$REPO_PATH/zsh/zshrc" ~/.zshrc
+ln -sf "$REPO_PATH/zsh/.zshrc" ~/.zshrc
 ln -sf "$REPO_PATH/config/ghostty/config" ~/.config/ghostty/config
 ln -sf "$REPO_PATH/config/starship.toml" ~/.config/starship.toml
 
