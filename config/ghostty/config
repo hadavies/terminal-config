@@ -1,7 +1,7 @@
 # Ghostty config - optimized for git workflows
 
 # Theme: Catppuccin Mocha (great for git diffs)
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 
 # Font
 font-family = JetBrains Mono
@@ -12,15 +12,12 @@ window-padding-x = 12
 window-padding-y = 12
 
 # Shell integration
-shell-integration = true
+shell-integration = detect
 shell-integration-features = sudo,title
 
 # Cursor
 cursor-style = block
 cursor-opacity = 1
-
-# Tab bar
-tab-title-style = mostly-focused
 
 # Splits/Panes - useful for side-by-side git diffs
 keybind = ctrl+shift+right=new_split:right
@@ -46,4 +43,4 @@ selection-foreground = f5f5f5
 copy-on-select = true
 
 # Scrollback
-scrollback-lines = 10000
+scrollback-limit = 10000
