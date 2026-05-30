@@ -43,7 +43,7 @@ fi
 
 if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
   source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+  export ZSH_AUTOSUGGEST_STRATEGY=(history)
   bindkey '^l' autosuggest-accept
 fi
 
